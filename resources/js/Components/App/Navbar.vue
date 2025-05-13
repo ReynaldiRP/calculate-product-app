@@ -1,36 +1,30 @@
 <script setup>
-defineProps({
-    listMenu: {
-        type: Array,
-        required: true,
-    }
-})
+import SvgIcon from 'vue3-icon'
+import {mdiAccountCircle, mdiMessageBadge, mdiMagnify, mdiBrightness6, mdiBrightness4} from "@mdi/js";
+import {ref} from "vue";
+
+
+const isLightMode = ref(false);
+const toggleLightMode = () => {
+    isLightMode.value = !isLightMode.value;
+};
 </script>
 
 <template>
-    <div>
-        <nav class="flex items-center justify-between px-4">
-            <div class="flex gap-8 items-center">
-                <a href="/" class="text-lg font-bold">CostShift</a>
-                <div class="hidden md:flex space-x-4">
-                    <a v-for="(menu, index) in listMenu" :key="index"
-                       :href="menu.path" class="text-gray-700 hover:text-gray-900">
-                        {{ menu.name }}
-                    </a>
-                </div>
+    <div class="ml-0 sm:ml-24 md:ml-64 py-4 bg-[#030303]">
+        <nav class="grid grid-cols-2 px-4">
+            <div class="flex items-center gap-2 py-1">
+                <svg-icon type="mdi" :path="mdiMagnify" class="relative left-10 text-slate-500"></svg-icon>
+                <input class="py-2 w-[400px] rounded-lg pl-9" placeholder="Search.."/>
             </div>
-            <div class="hidden md:block">
-                <button class="py-2 px-6 font-bold border border-black rounded-full">
-                    Get Started
-                </button>
-            </div>
-            <div class="md:hidden">
-                <button @click="$emit('toggle-menu')" class="text-gray-700 focus:outline-none">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-                         stroke="currentColor" class="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"/>
-                    </svg>
-                </button>
+            <div class="flex gap-2 justify-end items-center">
+                <svg-icon v-if="isLightMode" @click="toggleLightMode" type="mdi" :path="mdiBrightness6" :size="32"
+                          style="color: yellow; cursor: pointer"></svg-icon>
+                <svg-icon v-else @click="toggleLightMode" type="mdi" :path="mdiBrightness4" :size="32"
+                          style="color: white;cursor: pointer"></svg-icon>
+                <svg-icon type="mdi" :path="mdiMessageBadge" :size="32" style="color: white"
+                          class="relative top-0.5 cursor-pointer"></svg-icon>
+                <svg-icon type="mdi" :path="mdiAccountCircle" :size="32" style="color: white"></svg-icon>
             </div>
         </nav>
     </div>
